@@ -6,7 +6,7 @@ public class Bili {
     private static boolean found = false;
     private static int boundX = 4;
     private static int boundY = 4;
-    private static char n, w, s, e; //switch
+    private char n, w, s, e; //switch
     private static int currentPosX;
     private static int currentPosY;
     private static int treasurePosX;
