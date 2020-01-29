@@ -3,11 +3,11 @@ import java.util.Scanner;
 
 public class Austin {
 
-    private static String maze [] [] = new String [4] [4];
+    private static String maze [] [];
     private static boolean found = false;
     //bounds of the maze
-    private static int boundX = 4;
-    private static int boundY = 4;
+    private static int boundX;
+    private static int boundY;
     // current player position
     private static int currPlayerPosX;
     private static int currPlayerPosY;
@@ -24,7 +24,6 @@ public class Austin {
     private static final String ANSI_YELLOW = "\u001B[33m";
     private static Scanner sc = new Scanner(System.in);
 
-
     //Austin
     public static void main (String[] args) {
         start();
@@ -33,6 +32,21 @@ public class Austin {
     //Josia
     // initializes the board and starts the maze game
     private static void start() {
+        int mazeSize;
+        do {
+            System.out.print("Enter a size for the maze: ");
+            mazeSize = sc.nextInt();
+            if (mazeSize >= 2) {
+                maze = new String [mazeSize] [mazeSize];
+                boundX = mazeSize;
+                boundY = mazeSize;
+                break;
+            } else {
+                System.out.println(ANSI_RED + mazeSize + " is an invalid size for the maze. " +
+                        "Please enter a value greater than or equal to 2." + ANSI_RESET);
+            }
+
+        } while (true);
         // initializes the maze
         for (int i = 0; i < maze.length; i++) {
             for (int j = 0; j < maze[i].length; j++) {
@@ -48,9 +62,9 @@ public class Austin {
     //Bili
     private static void move() {
         String dir;
+        sc.nextLine();
 
         while (!foundTreasure()) {
-
             System.out.print("Enter a direction [ N W S E ] or Q to exit: ");
             dir = sc.nextLine();
             switch (dir.toLowerCase()) {
@@ -72,7 +86,6 @@ public class Austin {
                     break;
                 case "q":
                     exit();
-                    break;
                 default:
                     System.out.println(ANSI_RED + "Invalid direction." + ANSI_RESET);
             }
@@ -111,7 +124,6 @@ public class Austin {
                 initPlayerPosY = rand.nextInt(boundY);
                 currPlayerPosX = initPlayerPosX;
                 currPlayerPosY = initPlayerPosY;
-
             } else {
                 currPlayerPosX = initPlayerPosX;
                 currPlayerPosY = initPlayerPosY;
@@ -134,8 +146,7 @@ public class Austin {
     //Bili
     // To shift upwards: (-1, 0);
     private static void moveNorth() {
-        int currX = currPlayerPosX;
-        int currY = currPlayerPosY;
+        int currX = currPlayerPosX, currY = currPlayerPosY;
 
         if  (currPlayerPosX-1 < 0) {
             System.out.println(ANSI_RED + "You cannot move outside the boundaries of the maze." + ANSI_RESET);
@@ -150,10 +161,9 @@ public class Austin {
     //Austin - moveSouth
     // To shift downwards: 1, 0);
     private static void moveSouth() {
-        int currX = currPlayerPosX;
-        int currY = currPlayerPosY;
+        int currX = currPlayerPosX, currY = currPlayerPosY;
 
-        if (currPlayerPosX+1 > 3) {
+        if (currPlayerPosX+1 > boundX-1) {
             System.out.println(ANSI_RED + "You cannot move outside the boundaries of the maze." + ANSI_RESET);
         } else {
             maze[currX][currY] = "[ ]";
@@ -166,8 +176,7 @@ public class Austin {
     //Austin - moveWest
     // To shift left: (0, -1);
     private static void moveWest() {
-        int currX = currPlayerPosX;
-        int currY = currPlayerPosY;
+        int currX = currPlayerPosX, currY = currPlayerPosY;
 
         if (currPlayerPosY-1 < 0) {
             System.out.println(ANSI_RED + "You cannot move outside the boundaries of the maze." + ANSI_RESET);
@@ -182,10 +191,9 @@ public class Austin {
     //Austin - moveEast
     // To shift right: (0, 1);
     private static void moveEast() {
-        int currX = currPlayerPosX;
-        int currY = currPlayerPosY;
+        int currX = currPlayerPosX, currY = currPlayerPosY;
 
-        if (currPlayerPosY+1 > 3) {
+        if (currPlayerPosY+1 > boundY-1) {
             System.out.println(ANSI_RED + "You cannot move outside the boundaries of the maze." + ANSI_RESET);
         } else {
             maze[currX][currY] = "[ ]";
